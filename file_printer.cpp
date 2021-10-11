@@ -4,14 +4,14 @@
 #include <ctime>
 #include <fstream>
 
-void FilePrinter::printItem(const IItem& item) const
+void FilePrinter::process(const IBlock& block) const
 {
     // Get the current timestamp
     std::stringstream fileName;
     fileName << "bulk" << std::time(nullptr) << ".log";
-    std::fstream file;
+    std::ofstream file;
     file.open(fileName.str());
-    item.printContent(file);
+    block.printContent(file);
     file << std::endl;
     file.close();
 }

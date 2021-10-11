@@ -2,7 +2,11 @@
 #include <string>
 #include <optional>
 
-#include "command.h"
+#include "input_processor.h"
+#include "default_block_factory.h"
+#include "standard_printer.h"
+#include "file_printer.h"
+#include "composite_processor.h"
 
 void printUsageString()
 {
@@ -10,7 +14,7 @@ void printUsageString()
     std::cout << "Usage: bulk N, where N is the size of command block" << std::endl;
 }
 
-std::optional<unsigned int> processParameters(int argc, char *argv[])
+std::optional<size_t> processParameters(int argc, char *argv[])
 {
     if (argc == 2)
     {
@@ -18,7 +22,7 @@ std::optional<unsigned int> processParameters(int argc, char *argv[])
         {
             auto blockSize = std::stoi(argv[1]);
             if (blockSize > 0)
-                return static_cast<unsigned int>(blockSize);   
+                return static_cast<size_t>(blockSize);   
         }
         catch(const std::exception& e)
         {
@@ -35,6 +39,13 @@ int main(int argc, char *argv[])
     if (!blockSize)
         return -1;
 
-    std::cout << "Block size: " << blockSize.value() << std::endl;   
+    DefaultBlockFactory factory(blockSize.value());
+    CompositeProcessor printer;
+    printer.addProcessor(std::make_unique<FilePrinter>());
+    printer.addProcessor(std::make_unique<StandardOutputPrinter>());
+
+    InputProcessor processor(factory, printer);
+    processor.processInput(std::cin);
+       
     return 0;
 }

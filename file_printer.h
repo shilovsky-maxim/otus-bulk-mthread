@@ -1,12 +1,12 @@
 #pragma once
 
-#include "printer.h"
+#include "block_processor.h"
 
-class FilePrinter final : public IPrinter
+class FilePrinter final : public IBlockProcessor
 {
 public:
     FilePrinter() = default;
     virtual ~FilePrinter() override = default;
 
-    void printItem(const IItem& item) const;
+    void process(const IBlock& block) const;
 };

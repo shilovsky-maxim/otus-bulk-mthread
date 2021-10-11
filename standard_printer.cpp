@@ -1,7 +1,8 @@
 #include "standard_printer.h"
 
-void StandardOutputPrinter::printItem(const IItem& item) const
+void StandardOutputPrinter::process(const IBlock& block) const
 {
-    item.printContent(std::cout);
+    std::cout << "bulk: ";
+    block.printContent(std::cout);
     std::cout << std::endl;
 }
