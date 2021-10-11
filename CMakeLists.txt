@@ -5,7 +5,12 @@ if(NOT DEFINED ENV{GITHUB_RUN_NUMBER})
 endif()
 
 project(bulk VERSION 0.0.$ENV{GITHUB_RUN_NUMBER})
-add_executable(bulk bulk.cpp command.cpp  base_block.cpp static_block.cpp dynamic_block.cpp)
+add_executable(bulk bulk.cpp 
+                    command.cpp 
+                    base_block.cpp
+                    static_block.cpp 
+                    dynamic_block.cpp
+                    default_block_factory.cpp)
 
 set_target_properties(bulk PROPERTIES
     CXX_STANDARD 17

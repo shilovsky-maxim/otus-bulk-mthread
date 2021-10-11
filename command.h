@@ -3,7 +3,7 @@
 #include "item.h"
 #include <ostream>
 
-class Command : public IItem
+class Command final : public IItem
 {
 public:
     Command(const std::string& name);
