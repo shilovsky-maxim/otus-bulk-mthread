@@ -10,7 +10,10 @@ add_executable(bulk bulk.cpp
                     base_block.cpp
                     static_block.cpp 
                     dynamic_block.cpp
-                    default_block_factory.cpp)
+                    default_block_factory.cpp
+                    standard_printer.cpp
+                    file_printer.cpp
+                    composite_printer.cpp)
 
 set_target_properties(bulk PROPERTIES
     CXX_STANDARD 17
