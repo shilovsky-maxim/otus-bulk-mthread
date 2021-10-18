@@ -21,3 +21,8 @@ void BaseBlock::printContent(std::ostream& out) const
         isFirst = false;
     }
 }
+
+std::vector<IItemPtr> BaseBlock::getItems() const
+{
+    return m_items;
+}

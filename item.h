@@ -14,4 +14,4 @@ public:
 
     virtual void printContent(std::ostream& out) const = 0;
 };
-using IItemPtr = std::unique_ptr<IItem>;
+using IItemPtr = std::shared_ptr<IItem>;

@@ -5,26 +5,35 @@
 #include <fstream>
 #include <atomic>
 
-static void printBlock(IBlockPtr block, size_t threadIndex)
+static std::string formTimestamp()
 {
-    static std::atomic<unsigned int> counter = 0u;
+    std::stringstream timestamp;
+    timestamp << "bulk" << std::time(nullptr);
+    return timestamp.str();
+}
+
+static void printCommand(const std::string& timestamp, IItemPtr item, size_t threadIndex)
+{
+    if (!item)
+        return;
     // Get the current timestamp
     std::stringstream fileName;
-    ++counter;
-    fileName << "bulk" << std::time(nullptr) << "_file_" << (threadIndex + 1) << "_" << counter << ".log";
+    fileName << timestamp << "_file_" << (threadIndex + 1) << ".log";
     std::ofstream file;
-    file.open(fileName.str());
-    block->printContent(file);
+    file.open(fileName.str(), std::ofstream::app);
+    item->printContent(file);
     file << std::endl;
     file.close();
 }
 
+using namespace std::placeholders;
 FilePrinter::FilePrinter()
-: m_pool(2, printBlock) 
+: m_name(formTimestamp()), m_pool(2, std::bind(printCommand, m_name, _1, _2))
 {
 }
 
 void FilePrinter::process(IBlockPtr block)
 {
-    m_pool.addData(block);
+    for (auto item : block->getItems())
+        m_pool.addData(item);
 }

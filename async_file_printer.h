@@ -12,5 +12,6 @@ public:
     void process(IBlockPtr block);
 
 private:
-    ThreadPool<IBlockPtr> m_pool;
+    std::string m_name;
+    ThreadPool<IItemPtr> m_pool;
 };
