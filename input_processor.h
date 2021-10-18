@@ -3,6 +3,7 @@
 #include <iostream>
 #include "block_factory.h"
 #include "block_processor.h"
+#include "input_provider.h"
 
 class IState;
 using IStatePtr = std::unique_ptr<IState>;
@@ -16,7 +17,7 @@ public:
     InputProcessor(IBlockFactory& blockFactory, IBlockProcessor& processor);
     ~InputProcessor();
 
-    void processInput(std::istream& in);
+    void processInput(IInputProvider& in);
 
 private:
     IStatePtr m_state;

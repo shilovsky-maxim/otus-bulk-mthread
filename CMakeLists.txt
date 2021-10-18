@@ -14,7 +14,8 @@ add_executable(bulk bulk.cpp
                     standard_printer.cpp
                     file_printer.cpp
                     composite_processor.cpp
-                    input_processor.cpp)
+                    input_processor.cpp
+                    cin_input_provider.cpp)
 
 set_target_properties(bulk PROPERTIES
     CXX_STANDARD 17

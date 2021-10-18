@@ -8,7 +8,7 @@ public:
     IState() = default;
     virtual ~IState() = default;
 
-    virtual IStatePtr nextState(std::istream& in) = 0;
+    virtual IStatePtr nextState(IInputProvider& in) = 0;
 };
 using IStatePtr = std::unique_ptr<IState>;
 
@@ -31,10 +31,10 @@ public:
     {
     }
 
-    IStatePtr nextState(std::istream& in) override
+    IStatePtr nextState(IInputProvider& in) override
     {
         std::string line;
-        if (std::getline(in, line))
+        if (in.getLine(line))
         {
             // Line is read successfully
             // If it's a brace, then start a dynamic block processing
@@ -63,10 +63,10 @@ public:
     {
     }
 
-    IStatePtr nextState(std::istream& in) override
+    IStatePtr nextState(IInputProvider& in) override
     {
         std::string line;
-        if (std::getline(in, line))
+        if (in.getLine(line))
         {
             if (line == "}")
             {
@@ -115,7 +115,7 @@ public:
     {
     }
 
-    IStatePtr nextState(std::istream& in) override
+    IStatePtr nextState(IInputProvider& in) override
     {
         if (m_block->isFull())
         {
@@ -123,7 +123,7 @@ public:
             return m_factory->makeStartState(m_processor); 
         }
         std::string line;
-        if (std::getline(in, line))
+        if (in.getLine(line))
         {
             //  We have a line
             if (line=="{")
@@ -190,7 +190,7 @@ InputProcessor::InputProcessor(IBlockFactory& blockFactory, IBlockProcessor& pro
     m_state = m_stateFactory->makeStartState(processor);
 }
 
-void InputProcessor::processInput(std::istream& in)
+void InputProcessor::processInput(IInputProvider& in)
 {
     while (m_state)
     {

@@ -7,6 +7,7 @@
 #include "standard_printer.h"
 #include "file_printer.h"
 #include "composite_processor.h"
+#include "cin_input_provider.h"
 
 void printUsageString()
 {
@@ -44,8 +45,9 @@ int main(int argc, char *argv[])
     printer.addProcessor(std::make_unique<FilePrinter>());
     printer.addProcessor(std::make_unique<StandardOutputPrinter>());
 
+    CinInputProvider in;
     InputProcessor processor(factory, printer);
-    processor.processInput(std::cin);
+    processor.processInput(in);
        
     return 0;
 }
