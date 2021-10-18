@@ -11,4 +11,4 @@ public:
     virtual bool addItem(IItemPtr item) = 0;
     virtual bool isFull() const = 0;
 };
-using IBlockPtr = std::unique_ptr<IBlock>;
+using IBlockPtr = std::shared_ptr<IBlock>;

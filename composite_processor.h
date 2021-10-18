@@ -10,7 +10,7 @@ public:
     virtual ~CompositeProcessor() override = default;
 
     void addProcessor(IBlockProcessorPtr printer);
-    void process(const IBlock& block) const override;
+    void process(IBlockPtr block) override;
 
 private:
     std::vector<IBlockProcessorPtr> m_processors;

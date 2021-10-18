@@ -5,17 +5,24 @@ if(NOT DEFINED ENV{GITHUB_RUN_NUMBER})
 endif()
 
 project(bulk VERSION 0.0.$ENV{GITHUB_RUN_NUMBER})
+
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 add_executable(bulk bulk.cpp 
                     command.cpp 
                     base_block.cpp
                     static_block.cpp 
                     dynamic_block.cpp
                     default_block_factory.cpp
-                    standard_printer.cpp
-                    file_printer.cpp
+                    async_file_printer.cpp
                     composite_processor.cpp
                     input_processor.cpp
-                    cin_input_provider.cpp)
+                    cin_input_provider.cpp
+                    async_cout_printer.cpp)
+
+target_link_libraries(bulk 
+                      ${CMAKE_THREAD_LIBS_INIT})
 
 set_target_properties(bulk PROPERTIES
     CXX_STANDARD 17

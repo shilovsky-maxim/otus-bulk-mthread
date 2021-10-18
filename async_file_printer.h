@@ -1,12 +1,16 @@
 #pragma once
 
 #include "block_processor.h"
+#include "thread_pool.h"
 
 class FilePrinter final : public IBlockProcessor
 {
 public:
-    FilePrinter() = default;
+    FilePrinter();
     virtual ~FilePrinter() override = default;
 
-    void process(const IBlock& block) const;
+    void process(IBlockPtr block);
+
+private:
+    ThreadPool<IBlockPtr> m_pool;
 };

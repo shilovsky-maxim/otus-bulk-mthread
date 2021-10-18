@@ -79,7 +79,7 @@ public:
                 }
                 else
                 {
-                    m_processor.process(*m_block);
+                    m_processor.process(m_block);
                     return m_factory->makeStartState(m_processor);
                 }
             }
@@ -119,7 +119,7 @@ public:
     {
         if (m_block->isFull())
         {
-            m_processor.process(*m_block);
+            m_processor.process(m_block);
             return m_factory->makeStartState(m_processor); 
         }
         std::string line;
@@ -128,7 +128,7 @@ public:
             //  We have a line
             if (line=="{")
             {
-                m_processor.process(*m_block);
+                m_processor.process(m_block);
                 return m_factory->makeDynamicBlockState(m_processor);
             }
             else
@@ -139,7 +139,7 @@ public:
         else
         {
             // It's end of file, we print existing block and quit
-            m_processor.process(*m_block);
+            m_processor.process(m_block);
             return nullptr;
         }
     }
