@@ -9,6 +9,6 @@ public:
     IBlockProcessor() = default;
     virtual ~IBlockProcessor() = default;
 
-    virtual void process(const IBlock& block) const = 0;
+    virtual void process(IBlockPtr block) = 0;
 };
 using IBlockProcessorPtr = std::unique_ptr<IBlockProcessor>;

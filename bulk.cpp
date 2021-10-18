@@ -4,9 +4,10 @@
 
 #include "input_processor.h"
 #include "default_block_factory.h"
-#include "standard_printer.h"
-#include "file_printer.h"
+#include "async_cout_printer.h"
+#include "async_file_printer.h"
 #include "composite_processor.h"
+#include "cin_input_provider.h"
 
 void printUsageString()
 {
@@ -42,10 +43,11 @@ int main(int argc, char *argv[])
     DefaultBlockFactory factory(blockSize.value());
     CompositeProcessor printer;
     printer.addProcessor(std::make_unique<FilePrinter>());
-    printer.addProcessor(std::make_unique<StandardOutputPrinter>());
+    printer.addProcessor(std::make_unique<AsyncCoutPrinter>());
 
+    CinInputProvider in;
     InputProcessor processor(factory, printer);
-    processor.processInput(std::cin);
+    processor.processInput(in);
        
     return 0;
 }
